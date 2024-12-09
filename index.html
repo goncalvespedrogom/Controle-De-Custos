@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Gastos | DevPedro</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="menu"> <!-- menu -->
+      <nav>
+        <h1>Controle de Gastos Residenciais</h1>
+        <button id="modoNoturnoBtn">Modo Noturno</button>
+      </nav>
+    </header>
+    <div class="container">
+      <section> <!-- cadastro de pessoas -->
+        <h2>Cadastrar usuários</h2>
+        <form id="pessoaForm">
+          <input type="text" id="nome" placeholder="Nome" required />
+          <input type="number" id="idade" placeholder="Idade" required />
+          <button type="submit">Adicionar</button>
+        </form>
+        <ul id="pessoasLista"></ul>
+      </section>
+
+      <section> <!-- cadastro de transações -->
+        <h2>Cadastrar transações</h2>
+        <form id="transacaoForm">
+          <input type="text" id="descricao" placeholder="Descrição" required />
+          <input
+            type="number"
+            step="0.01"
+            id="valor"
+            placeholder="Valor"
+            required
+          />
+          <select id="tipo" required>
+            <option value="receita">Receita</option>
+            <option value="despesa">Despesa</option>
+          </select>
+          <select id="pessoaId" required>
+            <option value="">Selecione uma Pessoa</option>
+          </select>
+          <button type="submit">Adicionar</button>
+        </form>
+        <ul id="transacoesLista"></ul>
+      </section>
+
+      <section> <!-- painel com o total de despesas e receitas -->
+        <h2>Resumo</h2>
+        <div id="resumo">
+          <p>Receitas: R$ <span id="totalReceitas">0.00</span></p>
+          <p>Despesas: R$ <span id="totalDespesas">0.00</span></p>
+          <p>Saldo Total: R$ <span id="saldoTotal">0.00</span></p>
+        </div>
+      </section>
+    </div>
+
+    <script src="script.js"></script> <!-- script js -->
+  </body>
+</html>

@@ -1,0 +1,193 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f7f7f7;
+  color: #000000da;
+}
+
+header {
+  display: flex;
+  background-color: rgb(48, 48, 48);
+  justify-content: center;
+}
+
+header nav {
+  display: flex;
+  width: 55%;
+  justify-content: space-between;
+  padding: 0 1rem;
+  height: 5rem;
+}
+
+#modoNoturnoBtn {
+    margin: 0;
+    max-height: 50%;
+    margin: auto 0;
+  }
+
+header nav h1 {
+  font-size: 13px;
+  margin-bottom: -20px;
+  margin-top: 3.3rem;
+  background-color: #f7f7f7;
+  padding: 0.5rem 1rem;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  max-height: 20%;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  text-align: justify;
+  color: #9e9e9e;
+  font-size: 13px;
+  margin-bottom: 5px;
+  margin-top: 1rem;
+}
+
+input,
+button {
+  padding: 0.625rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+select {
+  padding: 0.625rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button {
+  background-color: #000000;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  background: #fff;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+ul li button {
+  padding: 0.625rem;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+#resumo {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 0.625rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#resumo p {
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+#resumo span {
+  font-weight: bold;
+}
+
+/* estilos do modo noturno */
+body.modo-noturno {
+    background-color: #273242;
+    color: #f0f0f0;
+  }
+
+/* header noturno */
+body.modo-noturno header {
+  background-color: #1c2635;
+}
+
+/* h1 noturno */
+body.modo-noturno header nav h1 {
+  background-color: #273242;
+  color: #f0f0f0;
+}
+
+/* input, select e btn no modo noturo */
+body.modo-noturno input {
+  background: #3a4452;
+  border: 1px solid #f0f0f034;
+  color: #f0f0f0;
+}
+
+body.modo-noturno h2 {
+  color: #f0f0f0d3;
+}
+
+body.modo-noturno ::-webkit-input-placeholder {
+  color: #f0f0f0;
+}
+
+body.modo-noturno select {
+  background: #3a4452;
+  border: 1px solid #f0f0f034;
+  color: #f0f0f0;
+}
+
+body.modo-noturno button {
+  background-color: #1c2635;
+  color: #f0f0f0;
+}
+
+/* listas de usuários e transações modo noturno */
+body.modo-noturno ul li {
+  background: #3a4452;
+  border: 1px solid #f0f0f034;
+}
+
+/* resumo no modo noturno */
+body.modo-noturno #resumo {
+  background-color: #3a4452; 
+  border: 1px solid #f0f0f034;
+}
+
+body.modo-noturno #resumo span {
+  color: #f0f0f0;
+}
+
+/* btn no modo claro */
+#modoNoturnoBtn {
+  background-color: #494949;
+  color: #fff;
+}
+
+/* btn no modo escuro */
+body.modo-noturno #modoNoturnoBtn {
+  background-color: #3a4452;
+  color: #f0f0f0;
+}
