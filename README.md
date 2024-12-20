@@ -11,4 +11,4 @@
 
 <p align="center"> Link para acesso: https://devpedro-controle-de-custos.vercel.app/</p>
 
-<p align="center">Projeto ainda em desenvolvimento, em breve serão adicionadas novas funcionalidades e modificações visuais</p>
+<p align="center">Projeto ainda em desenvolvimento, em breve serão adicionadas novas funcionalidades e modificações visuais.</p>
