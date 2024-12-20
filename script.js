@@ -26,20 +26,20 @@ pessoaForm.addEventListener("submit", (e) => {
     pessoaForm.reset();
   });
   
-  // atualizar a lista de pessoas
-  function atualizarPessoasUI() {
-    pessoasLista.innerHTML = pessoas.map(pessoa => 
-      `<li>${pessoa.id} - ${pessoa.nome} (${pessoa.idade} anos)</li>`
-    ).join("");
-  }
+// atualizar a lista de pessoas
+function atualizarPessoasUI() {
+  pessoasLista.innerHTML = pessoas.map(pessoa => 
+    `<li>${pessoa.id} - ${pessoa.nome} (${pessoa.idade} anos)</li>`
+  ).join("");
+}
   
-  // atualizar select
-  function atualizarSelectPessoas() {
-    pessoaIdSelect.innerHTML = '<option value="">Selecione uma Pessoa</option>' +
-      pessoas.map(pessoa => 
-        `<option value="${pessoa.id}">${pessoa.nome} - ID: ${pessoa.id}</option>`
-      ).join("");
-  }
+// atualizar select
+function atualizarSelectPessoas() {
+  pessoaIdSelect.innerHTML = '<option value="">Selecione uma Pessoa</option>' +
+    pessoas.map(pessoa => 
+      `<option value="${pessoa.id}">${pessoa.nome} - ID: ${pessoa.id}</option>`
+    ).join("");
+}
   
 // cadastrar transação
 transacaoForm.addEventListener("submit", (e) => {
@@ -49,7 +49,8 @@ transacaoForm.addEventListener("submit", (e) => {
     const valor = parseFloat(document.getElementById("valor").value);
     const tipo = document.getElementById("tipo").value;
     const pessoaId = parseInt(document.getElementById("pessoaId").value);
-  
+    const dataInput = document.getElementById("data").value; // capturar a data do formulário
+
     const pessoa = pessoas.find(p => p.id === pessoaId);
     if (!pessoa) {
       alert("Pessoa não encontrada!");
@@ -60,8 +61,18 @@ transacaoForm.addEventListener("submit", (e) => {
       alert("Menores de idade só podem cadastrar despesas.");
       return;
     }
+
+    const data = dataInput
+      ? dataInput.split("-").reverse().join("/") : new Date().toLocaleDateString("pt-BR");
   
-    const novaTransacao = { id: transacaoIdSeq++, descricao, valor, tipo, pessoaId };
+    const novaTransacao = { 
+      id: transacaoIdSeq++, 
+      descricao, 
+      valor, 
+      tipo, 
+      pessoaId, 
+      data // Corrigido para usar a variável correta
+    };
     transacoes.push(novaTransacao);
   
     atualizarTransacoesUI();
@@ -69,11 +80,13 @@ transacaoForm.addEventListener("submit", (e) => {
     transacaoForm.reset();
   });
 
-// atualizar lista de transações
+// atualizar a lista de transações para incluir a data
 function atualizarTransacoesUI() {
   transacoesLista.innerHTML = transacoes.map(transacao => {
     const pessoa = pessoas.find(p => p.id === transacao.pessoaId);
-    return `<li>${transacao.id} - ${transacao.descricao} - R$${transacao.valor.toFixed(2)} (${transacao.tipo}) - ${pessoa.nome}</li>`;
+    return `<li>
+              ${transacao.id} - ${transacao.descricao} - R$${transacao.valor.toFixed(2)} (${transacao.tipo}) - ${transacao.data} - ${pessoa.nome}
+            </li>`;
   }).join("");
 }
 
@@ -94,9 +107,9 @@ function atualizarTotais() {
     document.getElementById("totalReceitas").innerText = totalReceitas.toFixed(2);
     document.getElementById("totalDespesas").innerText = totalDespesas.toFixed(2);
     document.getElementById("saldoTotal").innerText = saldoTotal.toFixed(2);
-  }
+}
 
-  // remover usuário e suas transações
+// remover usuário e suas transações
 function removerPessoa(id) {
     // filtrar o usuário removido
     pessoas = pessoas.filter(pessoa => pessoa.id !== id);
@@ -111,16 +124,16 @@ function removerPessoa(id) {
     atualizarTotais();
   }
 
-  function atualizarPessoasUI() {
-    pessoasLista.innerHTML = pessoas.map(pessoa => 
-      `<li>
-        ${pessoa.id} - ${pessoa.nome} (${pessoa.idade} anos) 
-        <button onclick="removerPessoa(${pessoa.id})">Remover</button>
-      </li>`
-    ).join("");
-  }
+function atualizarPessoasUI() {
+  pessoasLista.innerHTML = pessoas.map(pessoa => 
+    `<li>
+      ${pessoa.id} - ${pessoa.nome} (${pessoa.idade} anos) 
+      <button onclick="removerPessoa(${pessoa.id})">Remover</button>
+    </li>`
+  ).join("");
+}
 
-  // alternar o modo noturno
+// alternar o modo noturno
 const modoNoturnoBtn = document.getElementById("modoNoturnoBtn");
 
 modoNoturnoBtn.addEventListener("click", () => {
