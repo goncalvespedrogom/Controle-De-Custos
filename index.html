@@ -4,24 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- fonte roboto -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <!-- fonte roboto -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> <!-- icons bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <!-- icons bootstrap -->
     <title>Controle de Gastos | DevPedro</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="menu"> <!-- menu -->
+    <header class="menu">
+      <!-- menu -->
       <nav>
-        <h1>Controle de Gastos Residenciais</h1>
-        <button id="modoNoturnoBtn">Modo Noturno</button>
+        <img class="logo-finance" src="img/logo-finance-control-test.png" alt="Logo da Finance Control">
+        <button id="modoNoturnoBtn">
+          <i class="bi bi-moon"></i>
+        </button>
       </nav>
     </header>
     <div class="container">
-      <section> <!-- cadastro de pessoas -->
+      <section>
+        <!-- cadastro de pessoas -->
         <h2>Cadastrar usuários</h2>
         <form id="pessoaForm">
           <input type="text" id="nome" placeholder="Nome" required />
@@ -31,7 +42,8 @@
         <ul id="pessoasLista"></ul>
       </section>
 
-      <section> <!-- cadastro de transações -->
+      <section>
+        <!-- cadastro de transações -->
         <h2>Cadastrar transações</h2>
         <form id="transacaoForm">
           <input type="text" id="descricao" placeholder="Descrição" required />
@@ -42,6 +54,7 @@
             placeholder="Valor"
             required
           />
+
           <input type="date" id="data" placeholder="Data da Transação" />
           <select id="tipo" required>
             <option value="receita">Receita</option>
@@ -50,21 +63,51 @@
           <select id="pessoaId" required>
             <option value="">Selecione uma pessoa</option>
           </select>
+
           <button type="submit">Adicionar</button>
         </form>
         <ul id="transacoesLista"></ul>
       </section>
 
-      <section> <!-- painel com o total de despesas e receitas -->
+      <section>
+        <!-- painel com o total de despesas e receitas -->
         <h2>Resumo</h2>
-        <div id="resumo">
-          <p>Receitas: R$ <span id="totalReceitas">0.00</span></p>
-          <p>Despesas: R$ <span id="totalDespesas">0.00</span></p>
-          <p>Saldo Total: R$ <span id="saldoTotal">0.00</span></p>
+        <div class="resume">
+          <div id="resumo">
+            <p>
+              Receitas <br />
+              R$ <span id="totalReceitas">0.00</span>
+            </p>
+            <p>
+              Despesas <br />
+              R$ <span id="totalDespesas">0.00</span>
+            </p>
+            <p>
+              Saldo Total <br />
+              R$ <span id="saldoTotal">0.00</span>
+            </p>
+          </div>
+
+          <div id="maioresResumo">
+            <p>
+              Maior Receita <br />
+              R$ <span id="maiorReceita">0.00</span>
+            </p>
+            <p>
+              Maior Despesa <br />
+              R$ <span id="maiorDespesa">0.00</span>
+            </p>
+            <p>
+              Quem mais teve despesas <br />
+              <span id="usuarioMaiorDespesa">Usuário</span><br>R$
+              <span id="valorMaiorDespesa">0.00</span>
+            </p>
+          </div>
         </div>
       </section>
     </div>
 
-    <script src="script.js"></script> <!-- script js -->
+    <script src="script.js"></script>
+    <!-- script js -->
   </body>
 </html>

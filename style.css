@@ -9,8 +9,10 @@ body {
 
 header {
   display: flex;
-  background-color: rgb(48, 48, 48);
+  background-color: #000000;
   justify-content: center;
+  box-shadow: 0px 0px 40px 20px #0500001d;
+  margin-bottom: 3rem;
 }
 
 header nav {
@@ -21,27 +23,35 @@ header nav {
   height: 5rem;
 }
 
-#modoNoturnoBtn {
-  margin: 0;
-  max-height: 50%;
+.logo-finance{
   margin: auto 0;
-  font-size: 1rem;
 }
 
-header nav h1 {
-  font-size: 1.2rem;
-  font-weight: normal;
-  margin-bottom: -20px;
-  margin-top: 3.3rem;
-  background-color: #f7f7f7;
-  padding: 0.5rem 1rem;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-  max-height: 20%;
+#modoNoturnoBtn {
+  margin: auto 1rem; /* ajustar isso dps */
+
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #494949;
+  color: #fff;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+#modoNoturnoBtn:hover {
+  transform: scale(1.1);
+}
+
 
 .container {
-  max-width: 1000px;
+  max-width: 1090px;
   margin: 0 auto;
   margin-top: 2rem;
   padding: 0 2rem;
@@ -64,11 +74,58 @@ button {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 1rem;
+  height: 40px;
+  box-sizing: border-box;
+  
+}
+
+button {
+  box-shadow: 2px 3px 19px -8px rgba(0, 0, 0, 0.69);
+  -webkit-box-shadow: 2px 3px 19px -8px rgba(0, 0, 0, 0.69);
+  -moz-box-shadow: 2px 3px 19px -8px rgba(0, 0, 0, 0.69);
+}
+
+.btn-remove {
+  padding: none;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin: 0;
+  border: none;
+  border-radius: none;
+  font-size: 1.2rem;
+
+  margin-top: .1rem;
+
+  margin-left: -.8rem;
+
+  background-color: transparent;
+
+  box-shadow: none;
+}
+
+.bi-trash-fill{
+ color: #000;
+}
+
+select {
+  height: 40px;
 }
 
 
 input[type="date"]{
   font-family: 'Roboto', sans-serif;
+
+  height: 40px;
+  box-sizing: border-box;
+  
+  margin: 0;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 0.625rem;
+
+
 }
 
 ::-webkit-calendar-picker-indicator{
@@ -106,6 +163,7 @@ button:hover {
 ul {
   list-style: none;
   padding: 0;
+  max-width: 1075px;
 }
 
 ul li {
@@ -125,20 +183,32 @@ ul li button {
   margin-bottom: 0;
 }
 
-#resumo {
+.resume {
+  display: flex;
+
+  max-width: 1075px;
+}
+
+#resumo, #maioresResumo {
   background-color: #ffffff;
   border: 1px solid #ccc;
   padding: 0.625rem;
   border-radius: 5px;
   text-align: center;
+  flex: 1;
+  margin-right: 2rem; /* Espaçamento entre as caixas */
 }
 
-#resumo p {
+#maioresResumo {
+  margin-right: 0; /* Não há necessidade de margem à direita para o último */
+}
+
+#resumo p, #maioresResumo p {
   margin: 10px 0;
   font-size: 1.2rem;
 }
 
-#resumo span {
+#resumo span, #maioresResumo span {
   font-weight: bold;
 }
 
@@ -191,6 +261,30 @@ body.modo-noturno button {
   color: #f0f0f0;
 }
 
+body.modo-noturno .btn-remove {
+  padding: none;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin: 0;
+  border: none;
+  border-radius: none;
+  font-size: 1.2rem;
+
+  margin-top: .1rem;
+
+  margin-left: -.8rem;
+
+  background-color: transparent;
+}
+
+body.modo-noturno .bi-trash-fill{
+  color: #1c2635;
+ }
+
+body.modo-noturno #modoNoturnoBtn {
+  background-color: #3a4452;
+}
+
 /* listas de usuários e transações modo noturno */
 body.modo-noturno ul li {
   background: #3a4452;
@@ -203,14 +297,27 @@ body.modo-noturno #resumo {
   border: 1px solid #f0f0f034;
 }
 
+body.modo-noturno #maioresResumo {
+  background-color: #3a4452;
+  border: 1px solid #f0f0f034;
+}
+
 body.modo-noturno #resumo span {
+  color: #f0f0f0;
+}
+
+body.modo-noturno #maioresResumo span {
   color: #f0f0f0;
 }
 
 /* btn no modo claro */
 #modoNoturnoBtn {
-  background-color: #494949;
+  background-color: #f7f7f7;
   color: #fff;
+}
+
+.bi-moon{ 
+  color: #000;
 }
 
 /* btn no modo escuro */
