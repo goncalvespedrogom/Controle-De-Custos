@@ -96,17 +96,17 @@ function atualizarTransacoesUI() {
   }).join("");
 }
 
-// Função para remover transação
+// função para remover transação
 function removerTransacao(id) {
-  // Filtra as transações removendo a transação com o id fornecido
+  // filtra as transações removendo a transação com o id fornecido
   transacoes = transacoes.filter(transacao => transacao.id !== id);
 
-  // Atualizar a UI das transações e os totais
+  // atualizar a UI das transações e os totais
   atualizarTransacoesUI();
   atualizarTotais();
 }
 
-// Atualiza os totais de receitas, despesas e saldo
+// atualiza os totais de receitas, despesas e saldo
 function atualizarTotais() {
   let totalReceitas = 0;
   let totalDespesas = 0;
@@ -125,7 +125,7 @@ function atualizarTotais() {
       totalDespesas += transacao.valor;
       if (transacao.valor > maiorDespesa) {
         maiorDespesa = transacao.valor;
-        // Identificar o usuário com maior despesa
+        // identificar o usuário com maior despesa
         usuarioMaiorDespesa = pessoas.find(pessoa => pessoa.id === transacao.pessoaId).nome;
         valorMaiorDespesa = transacao.valor;
       }
@@ -134,16 +134,16 @@ function atualizarTotais() {
 
   const saldoTotal = totalReceitas - totalDespesas;
 
-  // Atualizar os totais na interface
+  // atualizar os totais na interface
   document.getElementById("totalReceitas").innerText = totalReceitas.toFixed(2);
   document.getElementById("totalDespesas").innerText = totalDespesas.toFixed(2);
   document.getElementById("saldoTotal").innerText = saldoTotal.toFixed(2);
 
-  // Atualizar as maiores transações
+  // atualizar as maiores transações
   document.getElementById("maiorReceita").innerText = maiorReceita.toFixed(2);
   document.getElementById("maiorDespesa").innerText = maiorDespesa.toFixed(2);
   
-  // Atualizar o usuário com maior despesa
+  // atualizar o usuário com maior despesa
   document.getElementById("usuarioMaiorDespesa").innerText = usuarioMaiorDespesa || "Nenhum";
   document.getElementById("valorMaiorDespesa").innerText = valorMaiorDespesa.toFixed(2);
 }
@@ -172,16 +172,16 @@ modoNoturnoBtn.addEventListener("click", () => {
   const icone = modoNoturnoBtn.querySelector("i");
 
   if (document.body.classList.contains("modo-noturno")) {
-    // Estilo para o modo noturno
+    // estilo para o modo noturno
     icone.classList.remove("bi-moon");
     icone.classList.add("bi-sun");
-    modoNoturnoBtn.style.backgroundColor = "#3a4452"; // Fundo escuro
-    modoNoturnoBtn.style.color = "#fff"; // Texto branco
+    modoNoturnoBtn.style.backgroundColor = "#3a4452"; // fundo escuro
+    modoNoturnoBtn.style.color = "#fff"; // texto branco
   } else {
-    // Estilo para o modo claro
+    // estilo para o modo claro
     icone.classList.remove("bi-sun");
     icone.classList.add("bi-moon");
-    modoNoturnoBtn.style.backgroundColor = "#fff"; // Fundo branco
-    modoNoturnoBtn.style.color = "#000"; // Ícone preto
+    modoNoturnoBtn.style.backgroundColor = "#fff"; // fundo branco
+    modoNoturnoBtn.style.color = "#000"; // ícone preto
   }
 });
