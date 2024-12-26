@@ -3,9 +3,9 @@
 
 <div align="center">
 
-![image](https://github.com/user-attachments/assets/3077afe8-285b-43df-83f7-a019d007ad8b)
+![image](https://github.com/user-attachments/assets/c4add940-bbcf-4b7e-8c8c-dddb51fc5bbe)
 
-![image](https://github.com/user-attachments/assets/ed41b616-7657-4f8e-aacf-ae8672261964)
+![image](https://github.com/user-attachments/assets/0c429331-ff0f-4b94-9588-c121dae65150)
 
 </div>
 
