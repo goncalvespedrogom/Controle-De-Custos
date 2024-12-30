@@ -56,25 +56,18 @@
       <section>
         <h2>Cadastrar transações</h2>
         <form id="transacaoForm">
-          <input type="text" id="descricao" placeholder="Descrição" required />
-          <input
-            type="number"
-            step="0.01"
-            id="valor"
-            placeholder="Valor"
-            required
-          />
-
-          <input type="date" id="data" placeholder="Data da Transação" />
+          <input type="text" id="descricao" placeholder="Descrição" required>
+          <input type="number" id="valor" placeholder="Valor" required>
           <select id="tipo" required>
             <option value="receita">Receita</option>
             <option value="despesa">Despesa</option>
           </select>
           <select id="pessoaId" required>
-            <option value="">Selecione uma pessoa</option>
+            <option value="">Selecione uma Pessoa</option>
           </select>
-
-          <button type="submit">Adicionar</button>
+          <input type="date" id="data">
+          <button type="submit" id="btn-transacao" class="btn btn-primary">Adicionar</button>
+          
         </form>
         <ul id="transacoesLista"></ul>
       </section>
@@ -83,38 +76,7 @@
       <!-- painel com o total de despesas e receitas início -->
       <section>
         <h2>Resumo</h2>
-        <div class="resume">
-          <div id="resumo">
-            <p>
-              Total de Receitas <br />
-              R$ <span id="totalReceitas">0.00</span>
-            </p>
-            <p>
-              Total de Despesas <br />
-              R$ <span id="totalDespesas">0.00</span>
-            </p>
-            <p>
-              Saldo Total <br />
-              R$ <span id="saldoTotal">0.00</span>
-            </p>
-          </div>
-
-          <div id="maioresResumo">
-            <p>
-              Maior Receita <br />
-              R$ <span id="maiorReceita">0.00</span>
-            </p>
-            <p>
-              Maior Despesa <br />
-              R$ <span id="maiorDespesa">0.00</span>
-            </p>
-            <p>
-              Quem teve mais despesas <br />
-              <span id="usuarioMaiorDespesa">Usuário</span><br>R$
-              <span id="valorMaiorDespesa">0.00</span>
-            </p>
-          </div>
-        </div>
+        <div id="results" class="results-container"></div>
       </section>
       <!-- painel com o total de despesas e receitas fim -->
     </div>

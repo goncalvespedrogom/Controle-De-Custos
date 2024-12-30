@@ -28,9 +28,7 @@ header nav {
 }
 
 #modoNoturnoBtn {
-  margin: auto 1rem; /* ajustar isso dps */
-
-
+  margin: auto 1rem;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -49,7 +47,6 @@ header nav {
   transform: scale(1.1);
 }
 
-
 .container {
   max-width: 1090px;
   margin: 0 auto;
@@ -62,7 +59,7 @@ h2 {
   text-align: justify;
   color: #9e9e9e;
   font-size: 1rem;
-  margin-bottom: 5px;
+  margin-bottom: .5rem;
   margin-top: 1rem;
 }
 
@@ -76,7 +73,6 @@ button {
   font-size: 1rem;
   height: 40px;
   box-sizing: border-box;
-  
 }
 
 button {
@@ -86,46 +82,64 @@ button {
 }
 
 .btn-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: none;
-  margin-right: 0;
-  margin-bottom: 0;
-  margin: 0;
   border: none;
   border-radius: none;
-  font-size: 1.2rem;
-
-  margin-top: .1rem;
-
-  margin-left: -.8rem;
-
-  background-color: transparent;
-
   box-shadow: none;
+  margin: 0;
+  max-width: 15px;
+  min-width: 15px;
+  background-color: transparent;
+  font-size: 19px;
+  height: 37px;
 }
 
 .bi-trash-fill{
  color: #000;
+ margin-top: .3rem;
+}
+
+.btn-edit{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: none;
+  margin: 0;
+  border: none;
+  border-radius: none;
+  margin-left: 0;
+  box-shadow: none;
+  max-width: 15px;
+  min-width: 15px;
+  background-color: transparent;
+  font-size: 17px;
+  height: 37px;
+}
+
+.bi-pencil-fill{
+  color: #000;
+  margin-top: .2rem;
 }
 
 select {
   height: 40px;
 }
 
-
 input[type="date"]{
   font-family: 'Roboto', sans-serif;
-
   height: 40px;
   box-sizing: border-box;
-  
   margin: 0;
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 5px;
   font-size: 1rem;
   padding: 0.625rem;
-
-
 }
 
 ::-webkit-calendar-picker-indicator{
@@ -183,33 +197,69 @@ ul li button {
   margin-bottom: 0;
 }
 
-.resume {
+li {
   display: flex;
+  align-items: center;
+}
 
+li .btn-edit {
+  order: 1; /* define que o botão de editar será exibido primeiro */
+}
+
+li .btn-remove {
+  order: 2; /* define que o botão de remover será exibido depois */
+}
+
+.result-header {
+  display: flex;
+  align-items: center;  
+  color: #9e9e9e;  /* cor padrão para o título e o ícone */
+}
+
+.result-header i {
+  margin-right: 10px; /* espaçamento entre o ícone e o título */
+  font-size: 1.2em;   
+}
+
+.results-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 box por linha */
+  gap: 1rem; 
   max-width: 1075px;
 }
 
-#resumo, #maioresResumo {
-  background-color: #ffffff;
+.result-box {
   border: 1px solid #ccc;
-  padding: 0.625rem;
-  border-radius: 5px;
-  text-align: center;
-  flex: 1;
-  margin-right: 2rem; /* Espaçamento entre as caixas */
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-height: 100px; /* garantir tamanho uniforme */
+  position: relative; /* necessário para posicionamento do título */
 }
 
-#maioresResumo {
-  margin-right: 0; /* Não há necessidade de margem à direita para o último */
+.result-box h4 {
+  display: flex;
+  margin: 0;
+  font-size: .9rem; 
+  color: inherit;  /* herda a cor do pai (a cor definida no result-header) */
+  align-items: center; 
+  gap: .2rem; /* espaçamento entre o ícone e o título */
 }
 
-#resumo p, #maioresResumo p {
-  margin: 10px 0;
-  font-size: 1.2rem;
+/* ícones dos resultados */
+.result-box h4 i {
+  font-size: 1.2rem; 
+  color: #9e9e9e; 
 }
 
-#resumo span, #maioresResumo span {
-  font-weight: bold;
+.result-box p {
+  margin: 0;
+  font-size: 1.4rem; 
+  font-weight: bold; 
+  color: #333; 
+  text-align: center; 
+  margin-top: 1.8rem;
 }
 
 /* estilos do modo noturno */
@@ -269,11 +319,8 @@ body.modo-noturno .btn-remove {
   border: none;
   border-radius: none;
   font-size: 1.2rem;
-
   margin-top: .1rem;
-
   margin-left: -.8rem;
-
   background-color: transparent;
 }
 
@@ -326,6 +373,21 @@ body.modo-noturno #modoNoturnoBtn {
   color: #f0f0f0;
 }
 
+/* box de resultados modo noturno */
+.modo-noturno .result-box {
+  background-color: #3a4452;
+  color: #f0f0f0;
+  border: 1px solid #f0f0f041;
+}
+
+.modo-noturno .result-box h4 {
+  color: #f0f0f094;
+}
+
+.modo-noturno .result-box p {
+  color: #f0f0f0;
+}
+
 /* responsivo */
 
 @media screen and (max-width: 800px) {
@@ -335,6 +397,11 @@ body.modo-noturno #modoNoturnoBtn {
 
   header nav {
     width: 100%;
+  }
+
+  form{
+    display: flex;
+    flex-direction: column;
   }
 
   #modoNoturnoBtn {
@@ -350,5 +417,12 @@ body.modo-noturno #modoNoturnoBtn {
     padding: 0.5rem 1rem;
     max-height: 20%;
     max-width: 50%;
+  }
+
+  .results-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* 1 box por linha */
+    gap: 1rem;
+    max-width: 1075px;
   }
 }

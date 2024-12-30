@@ -2,12 +2,47 @@ let pessoas = [];
 let transacoes = [];
 let pessoaIdSeq = 1;
 let transacaoIdSeq = 1;
+let transacaoEditando = null;  // variável para armazenar a transação que está sendo editada
 
 const pessoaForm = document.getElementById("pessoaForm");
 const transacaoForm = document.getElementById("transacaoForm");
 const pessoasLista = document.getElementById("pessoasLista");
 const transacoesLista = document.getElementById("transacoesLista");
 const pessoaIdSelect = document.getElementById("pessoaId");
+
+let totalReceitas = 0;
+let totalDespesas = 0;
+let saldoTotal = 0;
+let maiorReceita = 0;
+let maiorDespesa = 0;
+let usuarioMaiorDespesa = null;
+let valorMaiorDespesa = 0;
+
+document.addEventListener("DOMContentLoaded", function () {
+  const results = [
+    { titulo: "Total de Receitas", valor: `R$ ${totalReceitas.toFixed(2)}`, icon: "bi bi-graph-up-arrow" },
+    { titulo: "Total de Despesas", valor: `R$ ${totalDespesas.toFixed(2)}`, icon: "bi bi-graph-down-arrow" },
+    { titulo: "Saldo Total", valor: `R$ ${saldoTotal.toFixed(2)}`, icon: "bi-currency-dollar" },
+    { titulo: "Maior Receita", valor: totalReceitas > 0 ? `R$ ${maiorReceita.toFixed(2)}` : "N/A", icon: "bi-arrow-up-circle" },
+    { titulo: "Maior Despesa", valor: totalDespesas > 0 ? `R$ ${maiorDespesa.toFixed(2)}` : "N/A", icon: "bi-arrow-down-circle" },
+    { 
+      titulo: "Quem teve mais despesas", 
+      valor: usuarioMaiorDespesa ? `${usuarioMaiorDespesa}<br>R$ ${valorMaiorDespesa.toFixed(2)}` : "N/A",
+      icon: "bi-person-circle"
+    }
+  ];
+
+  const resultsContainer = document.getElementById("results");
+  resultsContainer.innerHTML = results.map(result => `
+    <div class="result-box">
+      <div class="result-header">
+        <i class="bi ${result.icon}"></i> 
+        <h4>${result.titulo}</h4> 
+      </div>
+      <p>${result.valor}</p>
+    </div>
+  `).join("");
+});
 
 // cadastrar usuário
 pessoaForm.addEventListener("submit", (e) => {
@@ -20,8 +55,8 @@ pessoaForm.addEventListener("submit", (e) => {
   const novaPessoa = { id: pessoaIdSeq++, nome, idade };
   pessoas.push(novaPessoa);
 
-  atualizarPessoasUI();       // atualizar a lista
-  atualizarSelectPessoas();   // atualizar o dropdown de pessoas no formulário de transações
+  atualizarPessoasUI();       // atualiza a lista
+  atualizarSelectPessoas();   // atualiza o dropdown de pessoas no formulário de transações
 
   pessoaForm.reset();
 });
@@ -32,8 +67,7 @@ function atualizarPessoasUI() {
     `<li>
       ${pessoa.id} - ${pessoa.nome} (${pessoa.idade} anos) 
       <button class="btn-remove" onclick="removerPessoa(${pessoa.id})"><i class="bi bi-trash-fill"></i></button>
-    </li>`
-  ).join("");
+    </li>`).join("");
 }
 
 // atualizar select
@@ -44,7 +78,7 @@ function atualizarSelectPessoas() {
     ).join("");
 }
 
-// cadastrar transação
+// cadastrar ou editar transação
 transacaoForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -52,7 +86,7 @@ transacaoForm.addEventListener("submit", (e) => {
   const valor = parseFloat(document.getElementById("valor").value);
   const tipo = document.getElementById("tipo").value;
   const pessoaId = parseInt(document.getElementById("pessoaId").value);
-  const dataInput = document.getElementById("data").value; // capturar a data do formulário
+  const dataInput = document.getElementById("data").value; // Capturar a data do formulário
 
   const pessoa = pessoas.find(p => p.id === pessoaId);
   if (!pessoa) {
@@ -68,52 +102,91 @@ transacaoForm.addEventListener("submit", (e) => {
   const data = dataInput
     ? dataInput.split("-").reverse().join("/") : new Date().toLocaleDateString("pt-BR");
 
-  const novaTransacao = { 
-    id: transacaoIdSeq++, 
-    descricao, 
-    valor, 
-    tipo, 
-    pessoaId, 
-    data // corrigido para usar a variável correta
-  };
-  transacoes.push(novaTransacao);
+  // se estamos editando uma transação
+  if (transacaoEditando) {
+    // atualiza os dados da transação editada
+    transacaoEditando.descricao = descricao;
+    transacaoEditando.valor = valor;
+    transacaoEditando.tipo = tipo;
+    transacaoEditando.pessoaId = pessoaId;
+    transacaoEditando.data = data;
+
+    transacaoEditando = null;  // limpa a variável após editar
+    document.getElementById("btn-transacao").textContent = "Adicionar";  // volta o texto do botão para "Adicionar"
+  } else {
+    // adiciona uma nova transação
+    const novaTransacao = { 
+      id: transacaoIdSeq++, 
+      descricao, 
+      valor, 
+      tipo, 
+      pessoaId, 
+      data 
+    };
+    transacoes.push(novaTransacao);
+  }
 
   atualizarTransacoesUI();
   atualizarTotais();
   transacaoForm.reset();
 });
 
-// atualizar a lista de transações para incluir o botão de remoção
+// editar transação
+function editarTransacao(id) {
+  // encontra a transação pelo ID
+  const transacao = transacoes.find(t => t.id === id);
+  
+  if (transacao) {
+    // preenche o formulário com os dados da transação
+    document.getElementById("descricao").value = transacao.descricao;
+    document.getElementById("valor").value = transacao.valor;
+    document.getElementById("tipo").value = transacao.tipo;
+    document.getElementById("pessoaId").value = transacao.pessoaId;
+    document.getElementById("data").value = transacao.data.split("/").reverse().join("-");
+
+    // define a transação como sendo a que está sendo editada
+    transacaoEditando = transacao;
+    document.getElementById("btn-transacao").textContent = "Atualizar";  // altera o texto do botão para "Atualizar"
+  }
+}
+
+// atualizar a lista de transações para incluir o botão de remoção e edição
 function atualizarTransacoesUI() {
   transacoesLista.innerHTML = transacoes.map(transacao => {
     const pessoa = pessoas.find(p => p.id === transacao.pessoaId);
     return `<li>
-              ${transacao.id} - ${transacao.descricao} - R$${transacao.valor.toFixed(2)} (${transacao.tipo}) - ${transacao.data} - ${pessoa.nome}
+                ${transacao.id} - ${transacao.descricao} - R$${transacao.valor.toFixed(2)} (${transacao.tipo}) - ${transacao.data} - ${pessoa.nome}
               <button class="btn-remove" onclick="removerTransacao(${transacao.id})">
                 <i class="bi bi-trash-fill"></i>
+              </button>
+              <button class="btn-edit" onclick="editarTransacao(${transacao.id})">
+                <i class="bi bi-pencil-fill"></i>
               </button>
             </li>`;
   }).join("");
 }
 
-// função para remover transação
+// aunção para remover transação
 function removerTransacao(id) {
   // filtra as transações removendo a transação com o id fornecido
   transacoes = transacoes.filter(transacao => transacao.id !== id);
 
-  // atualizar a UI das transações e os totais
+  // atualiza a UI das transações e os totais
   atualizarTransacoesUI();
   atualizarTotais();
 }
 
 // atualiza os totais de receitas, despesas e saldo
 function atualizarTotais() {
-  let totalReceitas = 0;
-  let totalDespesas = 0;
-  let maiorReceita = 0;
-  let maiorDespesa = 0;
-  let usuarioMaiorDespesa = null;
-  let valorMaiorDespesa = 0;
+  totalReceitas = 0;
+  totalDespesas = 0;
+  maiorReceita = 0;
+  maiorDespesa = 0;
+  usuarioMaiorDespesa = null;
+  valorMaiorDespesa = 0;
+
+  // objeto para armazenar as despesas totais de cada pessoa
+  const despesasPorPessoa = {};
 
   transacoes.forEach(transacao => {
     if (transacao.tipo === "receita") {
@@ -121,42 +194,73 @@ function atualizarTotais() {
       if (transacao.valor > maiorReceita) {
         maiorReceita = transacao.valor;
       }
-    } else if (transacao.tipo === "despesa") {
+    } else {
       totalDespesas += transacao.valor;
       if (transacao.valor > maiorDespesa) {
         maiorDespesa = transacao.valor;
-        // identificar o usuário com maior despesa
-        usuarioMaiorDespesa = pessoas.find(pessoa => pessoa.id === transacao.pessoaId).nome;
-        valorMaiorDespesa = transacao.valor;
+        const pessoa = pessoas.find(p => p.id === transacao.pessoaId);
+        usuarioMaiorDespesa = pessoa ? pessoa.nome : "Desconhecido";
+        valorMaiorDespesa = maiorDespesa;
       }
+
+      // acumula o total de despesas por pessoa
+      if (!despesasPorPessoa[transacao.pessoaId]) {
+        despesasPorPessoa[transacao.pessoaId] = 0;
+      }
+      despesasPorPessoa[transacao.pessoaId] += transacao.valor;
     }
   });
 
-  const saldoTotal = totalReceitas - totalDespesas;
+  // agora, verifica quem teve o maior total de despesas
+  let maiorDespesaTotal = 0;
+  let pessoaMaiorDespesaTotal = null;
+  for (let pessoaId in despesasPorPessoa) {
+    if (despesasPorPessoa[pessoaId] > maiorDespesaTotal) {
+      maiorDespesaTotal = despesasPorPessoa[pessoaId];
+      pessoaMaiorDespesaTotal = pessoas.find(p => p.id === parseInt(pessoaId)).nome;
+    }
+  }
 
-  // atualizar os totais na interface
-  document.getElementById("totalReceitas").innerText = totalReceitas.toFixed(2);
-  document.getElementById("totalDespesas").innerText = totalDespesas.toFixed(2);
-  document.getElementById("saldoTotal").innerText = saldoTotal.toFixed(2);
+  // atualiza o valor da pessoa com maior despesa total
+  usuarioMaiorDespesa = pessoaMaiorDespesaTotal;
+  valorMaiorDespesa = maiorDespesaTotal;
 
-  // atualizar as maiores transações
-  document.getElementById("maiorReceita").innerText = maiorReceita.toFixed(2);
-  document.getElementById("maiorDespesa").innerText = maiorDespesa.toFixed(2);
-  
-  // atualizar o usuário com maior despesa
-  document.getElementById("usuarioMaiorDespesa").innerText = usuarioMaiorDespesa || "Nenhum";
-  document.getElementById("valorMaiorDespesa").innerText = valorMaiorDespesa.toFixed(2);
+  saldoTotal = totalReceitas - totalDespesas;
+
+  const results = [
+    { titulo: "Total de Receitas", valor: `R$ ${totalReceitas.toFixed(2)}`, icon: "bi bi-graph-up-arrow" },
+    { titulo: "Total de Despesas", valor: `R$ ${totalDespesas.toFixed(2)}`, icon: "bi bi-graph-down-arrow" },
+    { titulo: "Saldo Total", valor: `R$ ${saldoTotal.toFixed(2)}`, icon: "bi-currency-dollar" },
+    { titulo: "Maior Receita", valor: `R$ ${maiorReceita.toFixed(2)}`, icon: "bi-arrow-up-circle" },
+    { titulo: "Maior Despesa", valor: `R$ ${maiorDespesa.toFixed(2)}`, icon: "bi-arrow-down-circle" },
+    { 
+      titulo: "Quem teve mais despesas", 
+      valor: usuarioMaiorDespesa ? `${usuarioMaiorDespesa} - R$ ${valorMaiorDespesa.toFixed(2)}` : "N/A", 
+      icon: "bi-person-circle"
+    }
+  ];
+
+  const resultsContainer = document.getElementById("results");
+  resultsContainer.innerHTML = results.map(result => `
+    <div class="result-box">
+      <div class="result-header">
+        <i class="bi ${result.icon}"></i>
+        <h4>${result.titulo}</h4>
+      </div>
+      <p>${result.valor}</p>
+    </div>
+  `).join("");
 }
 
 // remover usuário e suas transações
 function removerPessoa(id) {
-  // filtrar o usuário removido
+  // filtra o usuário removido
   pessoas = pessoas.filter(pessoa => pessoa.id !== id);
 
-  // remover transações associados ao usuário deletado
+  // remove transações associadas ao usuário deletado
   transacoes = transacoes.filter(transacao => transacao.pessoaId !== id);
 
-  // atualizar interfaces
+  // atualiza interfaces
   atualizarPessoasUI();
   atualizarSelectPessoas();
   atualizarTransacoesUI();
