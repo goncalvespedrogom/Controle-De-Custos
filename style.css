@@ -312,20 +312,48 @@ body.modo-noturno button {
 }
 
 body.modo-noturno .btn-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: none;
-  margin-right: 0;
-  margin-bottom: 0;
-  margin: 0;
   border: none;
   border-radius: none;
-  font-size: 1.2rem;
-  margin-top: .1rem;
-  margin-left: -.8rem;
+  box-shadow: none;
+  margin: 0;
+  max-width: 15px;
+  min-width: 15px;
   background-color: transparent;
+  font-size: 19px;
+  height: 37px;
 }
 
 body.modo-noturno .bi-trash-fill{
   color: #1c2635;
+  margin-top: .3rem;
+}
+
+body.modo-noturno .btn-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: none;
+  margin: 0;
+  border: none;
+  border-radius: none;
+  margin-left: 0;
+  box-shadow: none;
+  max-width: 15px;
+  min-width: 15px;
+  background-color: transparent;
+  font-size: 17px;
+  height: 37px;
+}
+
+body.modo-noturno .bi-pencil-fill{
+  color: #1c2635;
+  margin-top: .2rem;
  }
 
 body.modo-noturno #modoNoturnoBtn {
