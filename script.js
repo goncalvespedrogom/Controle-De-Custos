@@ -19,15 +19,29 @@ let usuarioMaiorDespesa = null;
 let valorMaiorDespesa = 0;
 
 document.addEventListener("DOMContentLoaded", function () {
+  atualizarResultados();
+});
+
+// função para formatar o valor em formato de moeda brasileira (R$ 2.500,90)
+function formatarValorReal(valor) {
+  if (isNaN(valor)) return "R$ 0,00"; // Caso o valor não seja um número, retorna R$ 0,00
+
+  return valor.toLocaleString("pt-BR", { 
+    style: "currency", 
+    currency: "BRL" 
+  });
+}
+
+function atualizarResultados() {
   const results = [
-    { titulo: "Total de Receitas", valor: `R$ ${totalReceitas.toFixed(2)}`, icon: "bi bi-graph-up-arrow" },
-    { titulo: "Total de Despesas", valor: `R$ ${totalDespesas.toFixed(2)}`, icon: "bi bi-graph-down-arrow" },
-    { titulo: "Saldo Total", valor: `R$ ${saldoTotal.toFixed(2)}`, icon: "bi-currency-dollar" },
-    { titulo: "Maior Receita", valor: totalReceitas > 0 ? `R$ ${maiorReceita.toFixed(2)}` : "N/A", icon: "bi-arrow-up-circle" },
-    { titulo: "Maior Despesa", valor: totalDespesas > 0 ? `R$ ${maiorDespesa.toFixed(2)}` : "N/A", icon: "bi-arrow-down-circle" },
-    { 
-      titulo: "Quem teve mais despesas", 
-      valor: usuarioMaiorDespesa ? `${usuarioMaiorDespesa}<br>R$ ${valorMaiorDespesa.toFixed(2)}` : "N/A",
+    { titulo: "Total de Receitas", valor: formatarValorReal(totalReceitas), icon: "bi bi-graph-up-arrow" },
+    { titulo: "Total de Despesas", valor: formatarValorReal(totalDespesas), icon: "bi bi-graph-down-arrow" },
+    { titulo: "Saldo Total", valor: formatarValorReal(saldoTotal), icon: "bi-currency-dollar" },
+    { titulo: "Maior Receita", valor: maiorReceita > 0 ? formatarValorReal(maiorReceita) : "R$ 0,00", icon: "bi-arrow-up-circle" },
+    { titulo: "Maior Despesa", valor: maiorDespesa > 0 ? formatarValorReal(maiorDespesa) : "R$ 0,00", icon: "bi-arrow-down-circle" },
+    {
+      titulo: "Quem teve mais despesas",
+      valor: usuarioMaiorDespesa ? `${usuarioMaiorDespesa}<br>${formatarValorReal(valorMaiorDespesa)}` : "N/A",
       icon: "bi-person-circle"
     }
   ];
@@ -36,12 +50,27 @@ document.addEventListener("DOMContentLoaded", function () {
   resultsContainer.innerHTML = results.map(result => `
     <div class="result-box">
       <div class="result-header">
-        <i class="bi ${result.icon}"></i> 
-        <h4>${result.titulo}</h4> 
+        <i class="bi ${result.icon}"></i>
+        <h4>${result.titulo}</h4>
       </div>
       <p>${result.valor}</p>
     </div>
   `).join("");
+}
+
+// função para formatar automaticamente o valor enquanto o usuário digita
+const inputValor = document.getElementById("valor");
+inputValor.addEventListener("input", (e) => {
+  let valor = e.target.value;
+  valor = valor.replace(/\D/g, ""); // Remove qualquer caractere que não seja número
+  valor = (parseInt(valor) / 100).toFixed(2); // Divide por 100 para criar o formato decimal
+  valor = valor.replace(".", ","); // Substitui ponto por vírgula
+  e.target.value = valor.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Adiciona os separadores de milhar
+});
+
+// zerar o valor ao clicar no input
+inputValor.addEventListener("focus", () => {
+  inputValor.value = "";
 });
 
 // cadastrar usuário
@@ -83,10 +112,19 @@ transacaoForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const descricao = document.getElementById("descricao").value;
-  const valor = parseFloat(document.getElementById("valor").value);
+  const valorInput = document.getElementById("valor").value;
+
+  // converte o valor de volta para número, tratando a vírgula corretamente
+  let valor = parseFloat(valorInput.replace(/\./g, '').replace(',', '.')); 
+
+  if (isNaN(valor)) {
+    alert("Por favor, insira um valor válido.");
+    return;
+  }
+
   const tipo = document.getElementById("tipo").value;
   const pessoaId = parseInt(document.getElementById("pessoaId").value);
-  const dataInput = document.getElementById("data").value; // Capturar a data do formulário
+  const dataInput = document.getElementById("data").value;
 
   const pessoa = pessoas.find(p => p.id === pessoaId);
   if (!pessoa) {
@@ -106,7 +144,7 @@ transacaoForm.addEventListener("submit", (e) => {
   if (transacaoEditando) {
     // atualiza os dados da transação editada
     transacaoEditando.descricao = descricao;
-    transacaoEditando.valor = valor;
+    transacaoEditando.valor = valor;  // atualiza o valor com a conversão correta
     transacaoEditando.tipo = tipo;
     transacaoEditando.pessoaId = pessoaId;
     transacaoEditando.data = data;
@@ -139,7 +177,12 @@ function editarTransacao(id) {
   if (transacao) {
     // preenche o formulário com os dados da transação
     document.getElementById("descricao").value = transacao.descricao;
-    document.getElementById("valor").value = transacao.valor;
+
+    // exibir o valor no formato correto para edição, sem causar erro
+    // formatar o valor com ponto como separador de milhar e vírgula como separador decimal
+    const valorFormatado = formatarValorParaInput(transacao.valor);
+    document.getElementById("valor").value = valorFormatado;
+
     document.getElementById("tipo").value = transacao.tipo;
     document.getElementById("pessoaId").value = transacao.pessoaId;
     document.getElementById("data").value = transacao.data.split("/").reverse().join("-");
@@ -150,23 +193,28 @@ function editarTransacao(id) {
   }
 }
 
+// função para formatar o valor corretamente ao exibir no input (com ponto e vírgula)
+function formatarValorParaInput(valor) {
+  return valor.toLocaleString("pt-BR", { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
 // atualizar a lista de transações para incluir o botão de remoção e edição
 function atualizarTransacoesUI() {
   transacoesLista.innerHTML = transacoes.map(transacao => {
     const pessoa = pessoas.find(p => p.id === transacao.pessoaId);
     return `<li>
-                ${transacao.id} - ${transacao.descricao} - R$${transacao.valor.toFixed(2)} (${transacao.tipo}) - ${transacao.data} - ${pessoa.nome}
-              <button class="btn-remove" onclick="removerTransacao(${transacao.id})">
-                <i class="bi bi-trash-fill"></i>
-              </button>
-              <button class="btn-edit" onclick="editarTransacao(${transacao.id})">
-                <i class="bi bi-pencil-fill"></i>
-              </button>
-            </li>`;
+      ${transacao.id} - ${transacao.descricao} - ${formatarValorReal(transacao.valor)} (${transacao.tipo}) - ${transacao.data} - ${pessoa.nome}
+      <button class="btn-remove" onclick="removerTransacao(${transacao.id})">
+        <i class="bi bi-trash-fill"></i>
+      </button>
+      <button class="btn-edit" onclick="editarTransacao(${transacao.id})">
+        <i class="bi bi-pencil-fill"></i>
+      </button>
+    </li>`;
   }).join("");
 }
 
-// aunção para remover transação
+// faunção para remover transação
 function removerTransacao(id) {
   // filtra as transações removendo a transação com o id fornecido
   transacoes = transacoes.filter(transacao => transacao.id !== id);
@@ -227,15 +275,16 @@ function atualizarTotais() {
 
   saldoTotal = totalReceitas - totalDespesas;
 
+  // atualizar os resultados com os valores formatados corretamente
   const results = [
-    { titulo: "Total de Receitas", valor: `R$ ${totalReceitas.toFixed(2)}`, icon: "bi bi-graph-up-arrow" },
-    { titulo: "Total de Despesas", valor: `R$ ${totalDespesas.toFixed(2)}`, icon: "bi bi-graph-down-arrow" },
-    { titulo: "Saldo Total", valor: `R$ ${saldoTotal.toFixed(2)}`, icon: "bi-currency-dollar" },
-    { titulo: "Maior Receita", valor: `R$ ${maiorReceita.toFixed(2)}`, icon: "bi-arrow-up-circle" },
-    { titulo: "Maior Despesa", valor: `R$ ${maiorDespesa.toFixed(2)}`, icon: "bi-arrow-down-circle" },
-    { 
-      titulo: "Quem teve mais despesas", 
-      valor: usuarioMaiorDespesa ? `${usuarioMaiorDespesa} - R$ ${valorMaiorDespesa.toFixed(2)}` : "N/A", 
+    { titulo: "Total de Receitas", valor: formatarValorReal(totalReceitas), icon: "bi bi-graph-up-arrow" },
+    { titulo: "Total de Despesas", valor: formatarValorReal(totalDespesas), icon: "bi bi-graph-down-arrow" },
+    { titulo: "Saldo Total", valor: formatarValorReal(saldoTotal), icon: "bi-currency-dollar" },
+    { titulo: "Maior Receita", valor: maiorReceita > 0 ? formatarValorReal(maiorReceita) : "R$ 0,00", icon: "bi-arrow-up-circle" },
+    { titulo: "Maior Despesa", valor: maiorDespesa > 0 ? formatarValorReal(maiorDespesa) : "R$ 0,00", icon: "bi-arrow-down-circle" },
+    {
+      titulo: "Quem teve mais despesas",
+      valor: usuarioMaiorDespesa ? `${usuarioMaiorDespesa} - ${formatarValorReal(valorMaiorDespesa)}` : "N/A",
       icon: "bi-person-circle"
     }
   ];
