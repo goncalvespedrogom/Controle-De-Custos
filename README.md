@@ -3,9 +3,7 @@
 
 <div align="center">
 
-![image](https://github.com/user-attachments/assets/963ed8ce-6cc0-40a7-b10c-84864c0f8d53)
-
-![image](https://github.com/user-attachments/assets/76faddae-4adc-4fae-bc45-671505fa880f)
+![Sem título](https://github.com/user-attachments/assets/37bdcc6b-1c10-4472-8aa7-1653c8e9cc53)
 
 </div>
 
