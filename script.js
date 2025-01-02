@@ -2,6 +2,7 @@ let pessoas = [];
 let transacoes = [];
 let pessoaIdSeq = 1;
 let transacaoIdSeq = 1;
+let pessoaEditando = null; // variável para armazenar a pessoa que está sendo editada
 let transacaoEditando = null;  // variável para armazenar a transação que está sendo editada
 
 const pessoaForm = document.getElementById("pessoaForm");
@@ -73,16 +74,32 @@ inputValor.addEventListener("focus", () => {
   inputValor.value = "";
 });
 
-// cadastrar usuário
+// cadastrar ou editar usuário
 pessoaForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  
+
   const nome = document.getElementById("nome").value;
   const idade = parseInt(document.getElementById("idade").value);
 
-  // cria novo usuário com id único
-  const novaPessoa = { id: pessoaIdSeq++, nome, idade };
-  pessoas.push(novaPessoa);
+  if (pessoaEditando) {
+    // Atualizar o usuário
+    pessoaEditando.nome = nome;
+    pessoaEditando.idade = idade;
+
+      // Atualizar o nome do usuário nas transações associadas
+  transacoes.forEach(transacao => {
+    if (transacao.pessoaId === pessoaEditando.id) {
+      transacao.pessoaNome = nome; // Adiciona ou atualiza a propriedade para referência ao nome
+    }
+  });
+
+    pessoaEditando = null;
+    document.querySelector("#pessoaForm button[type='submit']").textContent = "Adicionar";
+  } else {
+    // cria novo usuário com id único
+    const novaPessoa = { id: pessoaIdSeq++, nome, idade };
+    pessoas.push(novaPessoa);
+  }
 
   atualizarPessoasUI();       // atualiza a lista
   atualizarSelectPessoas();   // atualiza o dropdown de pessoas no formulário de transações
@@ -90,12 +107,28 @@ pessoaForm.addEventListener("submit", (e) => {
   pessoaForm.reset();
 });
 
+// editar pessoa
+function editarPessoa(id) {
+  const pessoa = pessoas.find(p => p.id === id);
+  if (pessoa) {
+    document.getElementById("nome").value = pessoa.nome;
+    document.getElementById("idade").value = pessoa.idade;
+    pessoaEditando = pessoa;
+    document.querySelector("#pessoaForm button[type='submit']").textContent = "Atualizar";
+  }
+}
+
 // atualizar a lista de pessoas
 function atualizarPessoasUI() {
   pessoasLista.innerHTML = pessoas.map(pessoa => 
     `<li>
       ${pessoa.id} - ${pessoa.nome} (${pessoa.idade} anos) 
-      <button class="btn-remove" onclick="removerPessoa(${pessoa.id})"><i class="bi bi-trash-fill"></i></button>
+      <button class="btn-remove" onclick="removerPessoa(${pessoa.id})">
+        <i class="bi bi-trash-fill"></i>
+      </button>
+      <button class="btn-edit" onclick="editarPessoa(${pessoa.id})">
+        <i class="bi bi-pencil-fill"></i>
+      </button>
     </li>`).join("");
 }
 
