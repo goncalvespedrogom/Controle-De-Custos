@@ -63,16 +63,76 @@ h2 {
   margin-top: 1rem;
 }
 
+.box-form{
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  background: #fff;
+  margin: 5px 0;
+  border-radius: 10px;
+  gap: .5rem;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #cccccc7c;
+}
+
+form{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+select {
+  height: 40px;
+  padding: 0.625rem;
+  padding-right: 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("img/caret-down.svg");
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 8px) center;
+  border: 1px solid #cccccc63;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: #808080;
+  max-width: 100px;
+  min-width: 100px;
+}
+
+#pessoaId {
+  max-width: 100px;
+  min-width: 100px;
+}
+
 input,
 button {
   padding: 0.625rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 1rem;
   height: 40px;
   box-sizing: border-box;
+  border: 1px solid #cccccc63;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: #808080;
+}
+
+input[type="date"]{
+  font-family: 'Roboto', sans-serif;
+  height: 40px;
+  box-sizing: border-box;
+  margin: 0;
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 0.625rem;
+  border: 1px solid #cccccc63;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -126,41 +186,8 @@ button {
   margin-top: .2rem;
 }
 
-select {
-  height: 40px;
-}
-
-input[type="date"]{
-  font-family: 'Roboto', sans-serif;
-  height: 40px;
-  box-sizing: border-box;
-  margin: 0;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-radius: 5px;
-  font-size: 1rem;
-  padding: 0.625rem;
-}
-
 ::-webkit-calendar-picker-indicator{
   cursor: pointer;
-}
-
-select {
-  padding: 0.625rem;
-  padding-right: 2.5rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  -webkit-appearance: none;
-  appearance: none;
-  background-image: url("img/caret-down.svg");
-  background-size: 24px;
-  background-repeat: no-repeat;
-  background-position: calc(100% - 8px) center;
 }
 
 button {
@@ -175,20 +202,23 @@ button:hover {
 }
 
 ul {
+  display: grid;
+  gap: 1rem;
   list-style: none;
+  border-radius: 10px;
+  grid-template-columns: repeat(3, 1fr);
   padding: 0;
-  max-width: 1075px;
 }
 
 ul li {
   display: flex;
-  gap: 0.8rem;
+  gap: .8rem;
   align-items: center;
-  background: #fff;
-  margin: 5px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #cccccc7c;
+  
 }
 
 ul li button {
@@ -210,6 +240,94 @@ li .btn-remove {
   order: 2; /* define que o botão de remover será exibido depois */
 }
 
+.box-cadastro{ /* box do cadastro (definir valor diferente de tamanho da box de transações) */
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-cadastro {
+  background-color: #f7f7f7;
+  padding: .1rem .3rem;
+  border-radius: 5px;
+  display: flex;
+  gap: .5rem;
+  margin-top: -3.9rem;
+  margin-right: -.1rem;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #cccccc7c;
+}
+
+.info-cadastro{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: .5rem;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #cccccc7c;
+  width: 68%;
+}
+
+.titulo-cadastro{
+  text-align: left;
+  font-weight: bold;
+}
+
+.idade-cadastro{
+  text-align: left;
+}
+
+.box-transacao {
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  min-height: 200px;
+}
+
+.info-transacao {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: .5rem;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #cccccc7c;
+  width: 68%;
+  min-height: 83%;
+}
+
+.titulo-transacao {
+  text-align: left;
+  font-weight: bold;
+}
+
+.descricao-transacao {
+  text-align: left;
+}
+
+.data-transacao {
+  text-align: left;
+}
+
+.btn-transacao {
+  background-color: #f7f7f7;
+  padding: .1rem .3rem;
+  border-radius: 5px;
+  display: flex;
+  gap: .5rem;
+  margin-top: -7.8rem;
+  margin-right: -.1rem;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #cccccc7c;
+}
+
 .result-header {
   display: flex;
   align-items: center;  
@@ -225,14 +343,13 @@ li .btn-remove {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 box por linha */
   gap: 1rem; 
-  max-width: 1075px;
 }
 
 .result-box {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc7c;
   border-radius: 8px;
   padding: 16px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   min-height: 100px; /* garantir tamanho uniforme */
   position: relative; /* necessário para posicionamento do título */
@@ -262,7 +379,7 @@ li .btn-remove {
   margin-top: 1.8rem;
 }
 
-/* estilos do modo noturno */
+/* ESTILOS DO MODO NOTURNO */
 body.modo-noturno {
   background-color: #273242;
   color: #f0f0f0;
@@ -279,11 +396,52 @@ body.modo-noturno header nav h1 {
   color: #f0f0f0;
 }
 
-/* input, select e btn no modo noturo */
-body.modo-noturno input {
+body.modo-noturno .box-form{
   background: #3a4452;
   border: 1px solid #f0f0f034;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.modo-noturno .info-cadastro{
+  background-color: #273242;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
   color: #f0f0f0;
+}
+
+body.modo-noturno .info-transacao {
+  background-color: #273242;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  color: #f0f0f0;
+}
+
+body.modo-noturno .btn-cadastro {
+  background-color: #273242;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+body.modo-noturno .btn-transacao {
+  background-color: #273242;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+body.modo-noturno button .bi-pencil-fill{
+  color: #f0f0f0;
+}
+
+body.modo-noturno button .bi-trash-fill{
+  color: #f0f0f0;
+}
+
+/* input, select e btn no modo noturo */
+body.modo-noturno input {
+  background: #273242;
+  border: none;
+  color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 body.modo-noturno h2 {
@@ -295,8 +453,8 @@ body.modo-noturno ::-webkit-input-placeholder {
 }
 
 body.modo-noturno select {
-  background: #3a4452;
-  border: 1px solid #f0f0f034;
+  background: #273242;
+  border: none;
   color: #f0f0f0;
   -webkit-appearance: none;
   appearance: none;
@@ -416,9 +574,9 @@ body.modo-noturno #modoNoturnoBtn {
   color: #f0f0f0;
 }
 
-/* responsivo */
+/* RESPONSIVO */
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 965px) {
   header {
     flex-direction: column;
   }
@@ -427,9 +585,40 @@ body.modo-noturno #modoNoturnoBtn {
     width: 100%;
   }
 
+  .box-form{
+    flex-direction: column;
+    gap: .5rem;
+  }
+
   form{
     display: flex;
     flex-direction: column;
+    gap: .5rem;
+    width: 100%;
+  }
+
+  input,
+  button {
+    padding: 0.625rem;
+    margin-right: 0;
+    border-radius: 5px;
+    font-size: 1rem;
+    height: 40px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  select {
+    padding-right: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+    min-width: 100%
+  }
+
+  #pessoaId {
+    max-width: none;
+    min-width: 100%;
   }
 
   #modoNoturnoBtn {
@@ -447,10 +636,21 @@ body.modo-noturno #modoNoturnoBtn {
     max-width: 50%;
   }
 
+  ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+
   .results-container {
     display: grid;
     grid-template-columns: repeat(1, 1fr); /* 1 box por linha */
     gap: 1rem;
-    max-width: 1075px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  ul {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

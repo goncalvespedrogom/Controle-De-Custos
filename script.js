@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // função para formatar o valor em formato de moeda brasileira (R$ 2.500,90)
 function formatarValorReal(valor) {
-  if (isNaN(valor)) return "R$ 0,00"; // Caso o valor não seja um número, retorna R$ 0,00
+  if (isNaN(valor)) return "R$ 0,00"; // caso o valor não seja um número, retorna R$ 0,00
 
   return valor.toLocaleString("pt-BR", { 
     style: "currency", 
@@ -63,10 +63,10 @@ function atualizarResultados() {
 const inputValor = document.getElementById("valor");
 inputValor.addEventListener("input", (e) => {
   let valor = e.target.value;
-  valor = valor.replace(/\D/g, ""); // Remove qualquer caractere que não seja número
-  valor = (parseInt(valor) / 100).toFixed(2); // Divide por 100 para criar o formato decimal
-  valor = valor.replace(".", ","); // Substitui ponto por vírgula
-  e.target.value = valor.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Adiciona os separadores de milhar
+  valor = valor.replace(/\D/g, ""); // remove qualquer caractere que não seja número
+  valor = (parseInt(valor) / 100).toFixed(2); // divide por 100 para criar o formato decimal
+  valor = valor.replace(".", ","); // substitui ponto por vírgula
+  e.target.value = valor.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // adiciona os separadores de milhar
 });
 
 // zerar o valor ao clicar no input
@@ -82,28 +82,31 @@ pessoaForm.addEventListener("submit", (e) => {
   const idade = parseInt(document.getElementById("idade").value);
 
   if (pessoaEditando) {
-    // Atualizar o usuário
+    // atualizar o usuário
     pessoaEditando.nome = nome;
     pessoaEditando.idade = idade;
 
-      // Atualizar o nome do usuário nas transações associadas
-  transacoes.forEach(transacao => {
-    if (transacao.pessoaId === pessoaEditando.id) {
-      transacao.pessoaNome = nome; // Adiciona ou atualiza a propriedade para referência ao nome
-    }
-  });
+    // atualizar o nome do usuário nas transações associadas
+    transacoes.forEach(transacao => {
+      if (transacao.pessoaId === pessoaEditando.id) {
+        transacao.pessoaNome = nome;  // aqui estamos atualizando o nome da pessoa nas transações
+      }
+    });
 
-    pessoaEditando = null;
-    document.querySelector("#pessoaForm button[type='submit']").textContent = "Adicionar";
+    pessoaEditando = null; // limpa a pessoa editando
+    document.querySelector("#pessoaForm button[type='submit']").innerHTML = '<i class="bi bi-person-plus-fill"></i>'; // Altera o texto do botão
+    
   } else {
-    // cria novo usuário com id único
+    // caso não seja uma edição, criamos um novo usuário
     const novaPessoa = { id: pessoaIdSeq++, nome, idade };
     pessoas.push(novaPessoa);
   }
 
-  atualizarPessoasUI();       // atualiza a lista
-  atualizarSelectPessoas();   // atualiza o dropdown de pessoas no formulário de transações
+  // atualiza as interfaces
+  atualizarPessoasUI();
+  atualizarSelectPessoas();
 
+  // limpa o formulário
   pessoaForm.reset();
 });
 
@@ -121,20 +124,26 @@ function editarPessoa(id) {
 // atualizar a lista de pessoas
 function atualizarPessoasUI() {
   pessoasLista.innerHTML = pessoas.map(pessoa => 
-    `<li>
-      ${pessoa.id} - ${pessoa.nome} (${pessoa.idade} anos) 
+    `<li class="box-cadastro">
+      <p class="info-cadastro"> 
+      <span class="titulo-cadastro"> ${pessoa.nome} </span>
+      <span class="idade-cadastro">  ${pessoa.idade} anos </span>
+      ID: ${pessoa.id}
+      </p>
+      <div class="btn-cadastro">
       <button class="btn-remove" onclick="removerPessoa(${pessoa.id})">
         <i class="bi bi-trash-fill"></i>
       </button>
       <button class="btn-edit" onclick="editarPessoa(${pessoa.id})">
         <i class="bi bi-pencil-fill"></i>
       </button>
+      </div>
     </li>`).join("");
 }
 
 // atualizar select
 function atualizarSelectPessoas() {
-  pessoaIdSelect.innerHTML = '<option value="">Selecione uma Pessoa</option>' +
+  pessoaIdSelect.innerHTML = '<option value="">Usuário</option>' +
     pessoas.map(pessoa => 
       `<option value="${pessoa.id}">${pessoa.nome} - ID: ${pessoa.id}</option>`
     ).join("");
@@ -183,7 +192,9 @@ transacaoForm.addEventListener("submit", (e) => {
     transacaoEditando.data = data;
 
     transacaoEditando = null;  // limpa a variável após editar
-    document.getElementById("btn-transacao").textContent = "Adicionar";  // volta o texto do botão para "Adicionar"
+    document.getElementById("btn-transacao").innerHTML = '<i class="bi bi-database-fill-add"></i>';  // volta o texto do botão para "Adicionar"
+
+    
   } else {
     // adiciona uma nova transação
     const novaTransacao = { 
@@ -202,7 +213,7 @@ transacaoForm.addEventListener("submit", (e) => {
   transacaoForm.reset();
 });
 
-// editar transação
+// função para editar a transação
 function editarTransacao(id) {
   // encontra a transação pelo ID
   const transacao = transacoes.find(t => t.id === id);
@@ -211,8 +222,7 @@ function editarTransacao(id) {
     // preenche o formulário com os dados da transação
     document.getElementById("descricao").value = transacao.descricao;
 
-    // exibir o valor no formato correto para edição, sem causar erro
-    // formatar o valor com ponto como separador de milhar e vírgula como separador decimal
+    // formata o valor com vírgula como separador decimal
     const valorFormatado = formatarValorParaInput(transacao.valor);
     document.getElementById("valor").value = valorFormatado;
 
@@ -222,7 +232,7 @@ function editarTransacao(id) {
 
     // define a transação como sendo a que está sendo editada
     transacaoEditando = transacao;
-    document.getElementById("btn-transacao").textContent = "Atualizar";  // altera o texto do botão para "Atualizar"
+    document.getElementById("btn-transacao").textContent = "Atualizar";  // muda o texto do botão para "Atualizar"
   }
 }
 
@@ -234,15 +244,28 @@ function formatarValorParaInput(valor) {
 // atualizar a lista de transações para incluir o botão de remoção e edição
 function atualizarTransacoesUI() {
   transacoesLista.innerHTML = transacoes.map(transacao => {
+    // encontra a pessoa associada à transação (pessoaId)
     const pessoa = pessoas.find(p => p.id === transacao.pessoaId);
-    return `<li>
-      ${transacao.id} - ${transacao.descricao} - ${formatarValorReal(transacao.valor)} (${transacao.tipo}) - ${transacao.data} - ${pessoa.nome}
+    
+    
+    
+    
+    // verifica se a pessoa foi encontrada e usa o nome correto da pessoa
+    return `<li class="box-transacao">
+      <p class="info-transacao"> 
+      <span class="titulo-transacao"> ${formatarValorReal(transacao.valor)} (${transacao.tipo}) </span>
+      <span class="descricao-transacao"> ${transacao.descricao} </span>
+      <span class="data-transacao"> ${pessoa ? pessoa.nome : "Desconhecido"} em ${transacao.data} </span>
+      ID: ${transacao.id} 
+      </p>
+      <div class="btn-transacao">
       <button class="btn-remove" onclick="removerTransacao(${transacao.id})">
         <i class="bi bi-trash-fill"></i>
       </button>
       <button class="btn-edit" onclick="editarTransacao(${transacao.id})">
         <i class="bi bi-pencil-fill"></i>
       </button>
+      </div>
     </li>`;
   }).join("");
 }

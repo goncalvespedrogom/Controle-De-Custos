@@ -37,16 +37,18 @@
           <i class="bi bi-moon"></i>
         </button>
       </nav>
-      <!-- topo do site fim -->
     </header>
+      <!-- topo do site fim -->
     <div class="container">
       <!-- cadastro de usuários início -->
       <section>
         <h2>Cadastrar usuários</h2>
         <form id="pessoaForm">
+          <div class="box-form">
           <input type="text" id="nome" placeholder="Nome" required />
           <input type="number" id="idade" placeholder="Idade" required />
-          <button type="submit">Adicionar</button>
+          <button type="submit"><i class="bi bi-person-plus-fill"></i></i></button>
+          </div>
         </form>
         <ul id="pessoasLista"></ul>
       </section>
@@ -55,6 +57,7 @@
       <!-- cadastro de transações início -->
       <section>
         <h2>Cadastrar transações</h2>
+        <div class="box-form">
         <form id="transacaoForm">
           <input type="text" id="descricao" placeholder="Descrição" required>
           <input type="text" id="valor" placeholder="R$ 0,00">
@@ -63,13 +66,15 @@
             <option value="despesa">Despesa</option>
           </select>
           <select id="pessoaId" required>
-            <option value="">Selecione uma Pessoa</option>
+            <option value="">Usuário</option>
           </select>
           <input type="date" id="data">
-          <button type="submit" id="btn-transacao" class="btn btn-primary">Adicionar</button>
-          
+          <button type="submit" id="btn-transacao" class="btn btn-primary">
+              <i class="bi bi-database-fill-add"></i>
+          </button>
         </form>
-        <ul id="transacoesLista"></ul>
+      </div>
+        <ul class="lista-cadastro" id="transacoesLista"></ul>
       </section>
       <!-- cadastro de transações fim -->
 
@@ -80,7 +85,6 @@
       </section>
       <!-- painel com o total de despesas e receitas fim -->
     </div>
-
     <script src="script.js"></script> <!-- script js -->
   </body>
 </html>
