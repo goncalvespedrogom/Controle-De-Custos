@@ -92,7 +92,7 @@ select {
   font-size: 1rem;
   -webkit-appearance: none;
   appearance: none;
-  background-image: url("img/caret-down.svg");
+  background-image: url("img/caret-down-fill.svg");
   background-size: 24px;
   background-repeat: no-repeat;
   background-position: calc(100% - 8px) center;
@@ -100,13 +100,13 @@ select {
   background-color: #f7f7f7;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   color: #808080;
-  max-width: 100px;
-  min-width: 100px;
+  max-width: 108px;
+  min-width: 108px;
 }
 
 #pessoaId {
-  max-width: 100px;
-  min-width: 100px;
+  max-width: 105px;
+  min-width: 105px;
 }
 
 input,
@@ -470,20 +470,7 @@ body.modo-noturno button {
 }
 
 body.modo-noturno .btn-remove {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: none;
-  border: none;
-  border-radius: none;
-  box-shadow: none;
-  margin: 0;
-  max-width: 15px;
-  min-width: 15px;
   background-color: transparent;
-  font-size: 19px;
-  height: 37px;
 }
 
 body.modo-noturno .bi-trash-fill{
@@ -492,27 +479,17 @@ body.modo-noturno .bi-trash-fill{
 }
 
 body.modo-noturno .btn-edit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: none;
-  margin: 0;
-  border: none;
-  border-radius: none;
-  margin-left: 0;
-  box-shadow: none;
-  max-width: 15px;
-  min-width: 15px;
   background-color: transparent;
-  font-size: 17px;
-  height: 37px;
 }
 
 body.modo-noturno .bi-pencil-fill{
   color: #1c2635;
-  margin-top: .2rem;
  }
+
+body.modo-noturno ::-webkit-calendar-picker-indicator{
+  cursor: pointer;
+  filter: invert(1);
+}
 
 body.modo-noturno #modoNoturnoBtn {
   background-color: #3a4452;
@@ -576,7 +553,7 @@ body.modo-noturno #modoNoturnoBtn {
 
 /* RESPONSIVO */
 
-@media screen and (max-width: 965px) {
+@media screen and (max-width: 970px) {
   header {
     flex-direction: column;
   }
