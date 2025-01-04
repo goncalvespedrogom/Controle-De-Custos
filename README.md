@@ -3,10 +3,10 @@
 
 <div align="center">
 
-![Sem título](https://github.com/user-attachments/assets/37bdcc6b-1c10-4472-8aa7-1653c8e9cc53)
+![financecontrol](https://github.com/user-attachments/assets/704e6048-d9ca-4c32-92ca-d4edc21c1dad)
 
 </div>
 
-<p align="center"> Link para acesso: https://devpedro-controle-de-custos.vercel.app/</p>
+<p align="center"> Link para acesso: https://financecontroldevpedro.vercel.app/</p>
 
 <p align="center">Projeto ainda em desenvolvimento, em breve serão adicionadas novas funcionalidades e modificações visuais.</p>
