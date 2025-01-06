@@ -211,18 +211,18 @@ transacaoForm.addEventListener("submit", (e) => {
   atualizarTransacoesUI();
   atualizarTotais();
   transacaoForm.reset();
-  restaurarPlaceholder();  // Restaura o placeholder após cadastrar/editar a transação
+  restaurarPlaceholder();  // restaura o placeholder após cadastrar/editar a transação
 });
 
 // função para editar a transação
 function editarTransacao(id) {
-  // encontra a transação pelo ID
+  // cncontra a transação pelo ID
   const transacao = transacoes.find(t => t.id === id);
   
   if (transacao) {
     // preenche o formulário com os dados da transação
     document.getElementById("descricao").value = transacao.descricao;
-
+    
     // formata o valor com vírgula como separador decimal
     const valorFormatado = formatarValorParaInput(transacao.valor);
     document.getElementById("valor").value = valorFormatado;
@@ -234,6 +234,10 @@ function editarTransacao(id) {
     // define a transação como sendo a que está sendo editada
     transacaoEditando = transacao;
     document.getElementById("btn-transacao").textContent = "Atualizar";  // muda o texto do botão para "Atualizar"
+
+    // remove o placeholder quando estiver editando
+    const dateInput = document.getElementById('data');
+    dateInput.removeAttribute('data-placeholder');
   }
 }
 
@@ -396,10 +400,16 @@ modoNoturnoBtn.addEventListener("click", () => {
   }
 });
 
+// placeholder do input date
 document.addEventListener('DOMContentLoaded', function () {
   const dateInput = document.getElementById('data');
+  
+  // inicializa o estado do placeholder
+  if (!dateInput.value) {
+    dateInput.setAttribute('data-placeholder', 'Selecione uma data');
+  }
 
-  // Define um evento para atualizar o estado do placeholder
+  // define um evento para atualizar o estado do placeholder
   dateInput.addEventListener('input', function () {
     if (this.value) {
       this.removeAttribute('data-placeholder');
@@ -408,15 +418,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Inicializa o estado do placeholder
-  if (!dateInput.value) {
-    dateInput.setAttribute('data-placeholder', 'Selecione uma data');
-  }
-
-  // Garante que o placeholder volte após registrar a transação
+  // garante que o placeholder volte após registrar a transação
   const transacaoForm = document.getElementById('transacaoForm');
   transacaoForm.addEventListener('submit', function () {
-    // Após o submit, se o campo de data estiver vazio, restauramos o placeholder
+    // após o submit, se o campo de data estiver vazio, restauramos o placeholder
     if (!dateInput.value) {
       dateInput.setAttribute('data-placeholder', 'Selecione uma data');
     }
