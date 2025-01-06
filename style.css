@@ -556,6 +556,7 @@ body.modo-noturno #modoNoturnoBtn {
 @media screen and (max-width: 970px) {
   header {
     flex-direction: column;
+    overflow-x: hidden;
   }
 
   header nav {
@@ -625,25 +626,43 @@ body.modo-noturno #modoNoturnoBtn {
     gap: 1rem;
   }
 
+  /* input de data */
   input[type="date"] {
-    -webkit-appearance: textfield; /* Remove a aparência específica no WebKit */
-    -moz-appearance: textfield;    /* Remove aparência no Firefox */
-    appearance: auto;              /* Mantém a aparência padrão */
-    display: inline-block;
-    background-color: #fff;
+    appearance: none; /* Remove estilos padrão do navegador */
+    -webkit-appearance: none;
+    -moz-appearance: none; /* Suporte para Firefox */
+    background-image: url("img/caret-down-fill.svg");
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 8px) center;
     font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
     height: 40px;
-    padding: 0.625rem;
+    box-sizing: border-box;
+    margin: 0;
     border-radius: 5px;
+    font-size: 1rem;
+    padding: 0.625rem;
     border: 1px solid #cccccc63;
-    cursor: pointer;
+    background-color: #f7f7f7;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    position: relative;
   }
-  
-  ::-webkit-calendar-picker-indicator {
-    display: inline;
-    opacity: 1;
-    cursor: pointer;
+
+  /* Placeholder personalizado (usado com JavaScript) */
+  input[data-placeholder]:empty::before {
+    content: attr(data-placeholder); /* Exibe o placeholder */
+    color: #999;
+    font-size: 1rem;
+    position: absolute;
+    line-height: 40px;
+    left: 0.625rem;
+    pointer-events: none; /* Não interfere no clique */
+  }
+
+  /* Remove o texto ao focar no campo */
+  input[type="date"]:focus::before {
+    content: "";
   }
 }
 

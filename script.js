@@ -211,6 +211,7 @@ transacaoForm.addEventListener("submit", (e) => {
   atualizarTransacoesUI();
   atualizarTotais();
   transacaoForm.reset();
+  restaurarPlaceholder();  // Restaura o placeholder após cadastrar/editar a transação
 });
 
 // função para editar a transação
@@ -393,4 +394,31 @@ modoNoturnoBtn.addEventListener("click", () => {
     modoNoturnoBtn.style.backgroundColor = "#fff"; // fundo branco
     modoNoturnoBtn.style.color = "#000"; // ícone preto
   }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const dateInput = document.getElementById('data');
+
+  // Define um evento para atualizar o estado do placeholder
+  dateInput.addEventListener('input', function () {
+    if (this.value) {
+      this.removeAttribute('data-placeholder');
+    } else {
+      this.setAttribute('data-placeholder', 'Selecione uma data');
+    }
+  });
+
+  // Inicializa o estado do placeholder
+  if (!dateInput.value) {
+    dateInput.setAttribute('data-placeholder', 'Selecione uma data');
+  }
+
+  // Garante que o placeholder volte após registrar a transação
+  const transacaoForm = document.getElementById('transacaoForm');
+  transacaoForm.addEventListener('submit', function () {
+    // Após o submit, se o campo de data estiver vazio, restauramos o placeholder
+    if (!dateInput.value) {
+      dateInput.setAttribute('data-placeholder', 'Selecione uma data');
+    }
+  });
 });
