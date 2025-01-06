@@ -626,21 +626,24 @@ body.modo-noturno #modoNoturnoBtn {
   }
 
   input[type="date"] {
-    appearance: textfield; /* Para evitar remoções por estilos globais */
-    -webkit-appearance: none; /* Remove a aparência padrão no iOS */
-    background-color: #f7f7f7;
+    -webkit-appearance: textfield; /* Remove a aparência específica no WebKit */
+    -moz-appearance: textfield;    /* Remove aparência no Firefox */
+    appearance: auto;              /* Mantém a aparência padrão */
+    display: inline-block;
+    background-color: #fff;
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     height: 40px;
     padding: 0.625rem;
     border-radius: 5px;
     border: 1px solid #cccccc63;
+    cursor: pointer;
   }
   
   ::-webkit-calendar-picker-indicator {
-    display: inline-block;
+    display: inline;
+    opacity: 1;
     cursor: pointer;
-    color: #000;
   }
 }
 
