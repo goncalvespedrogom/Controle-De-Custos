@@ -1,7 +1,8 @@
-let pessoas = [];
-let transacoes = [];
-let pessoaIdSeq = 1;
-let transacaoIdSeq = 1;
+let pessoas = JSON.parse(localStorage.getItem("pessoas")) || [];
+let transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+let pessoaIdSeq = pessoas.length ? Math.max(...pessoas.map(p => p.id)) + 1 : 1;
+let transacaoIdSeq = transacoes.length ? Math.max(...transacoes.map(t => t.id)) + 1 : 1;
+
 let pessoaEditando = null; // variável para armazenar a pessoa que está sendo editada
 let transacaoEditando = null;  // variável para armazenar a transação que está sendo editada
 
@@ -20,8 +21,47 @@ let usuarioMaiorDespesa = null;
 let valorMaiorDespesa = 0;
 
 document.addEventListener("DOMContentLoaded", function () {
+  carregarResumo();
   atualizarResultados();
+  atualizarPessoasUI();
+  atualizarSelectPessoas();
+  atualizarTransacoesUI();
 });
+
+// função para salvar dados no localStorage
+function salvarDados() {
+  localStorage.setItem("pessoas", JSON.stringify(pessoas));
+  localStorage.setItem("transacoes", JSON.stringify(transacoes));
+  salvarResumo();
+}
+
+// função para salvar os resultados no localStorage
+function salvarResumo() {
+  const resumo = {
+    totalReceitas,
+    totalDespesas,
+    saldoTotal,
+    maiorReceita,
+    maiorDespesa,
+    usuarioMaiorDespesa,
+    valorMaiorDespesa
+  };
+  localStorage.setItem("resumo", JSON.stringify(resumo));
+}
+
+// função para carregar os resultados do localStorage
+function carregarResumo() {
+  const resumoSalvo = JSON.parse(localStorage.getItem("resumo"));
+  if (resumoSalvo) {
+    totalReceitas = resumoSalvo.totalReceitas;
+    totalDespesas = resumoSalvo.totalDespesas;
+    saldoTotal = resumoSalvo.saldoTotal;
+    maiorReceita = resumoSalvo.maiorReceita;
+    maiorDespesa = resumoSalvo.maiorDespesa;
+    usuarioMaiorDespesa = resumoSalvo.usuarioMaiorDespesa;
+    valorMaiorDespesa = resumoSalvo.valorMaiorDespesa;
+  }
+}
 
 // função para formatar o valor em formato de moeda brasileira (R$ 2.500,90)
 function formatarValorReal(valor) {
@@ -42,7 +82,7 @@ function atualizarResultados() {
     { titulo: "Maior Despesa", valor: maiorDespesa > 0 ? formatarValorReal(maiorDespesa) : "R$ 0,00", icon: "bi-arrow-down-circle" },
     {
       titulo: "Quem teve mais despesas",
-      valor: usuarioMaiorDespesa ? `${usuarioMaiorDespesa}<br>${formatarValorReal(valorMaiorDespesa)}` : "N/A",
+      valor: usuarioMaiorDespesa ? `${usuarioMaiorDespesa} - ${formatarValorReal(valorMaiorDespesa)}` : "N/A",
       icon: "bi-person-circle"
     }
   ];
@@ -106,8 +146,13 @@ pessoaForm.addEventListener("submit", (e) => {
   atualizarPessoasUI();
   atualizarSelectPessoas();
 
+  // salvar no localStorage
+  salvarDados();
+
   // limpa o formulário
   pessoaForm.reset();
+
+
 });
 
 // editar pessoa
@@ -210,6 +255,10 @@ transacaoForm.addEventListener("submit", (e) => {
 
   atualizarTransacoesUI();
   atualizarTotais();
+
+  // salvar no localStorage
+  salvarDados();
+
   transacaoForm.reset();
   restaurarPlaceholder();  // restaura o placeholder após cadastrar/editar a transação
 });
@@ -252,9 +301,6 @@ function atualizarTransacoesUI() {
     // encontra a pessoa associada à transação (pessoaId)
     const pessoa = pessoas.find(p => p.id === transacao.pessoaId);
     
-    
-    
-    
     // verifica se a pessoa foi encontrada e usa o nome correto da pessoa
     return `<li class="box-transacao">
       <p class="info-transacao"> 
@@ -283,6 +329,8 @@ function removerTransacao(id) {
   // atualiza a UI das transações e os totais
   atualizarTransacoesUI();
   atualizarTotais();
+
+  salvarDados();
 }
 
 // atualiza os totais de receitas, despesas e saldo
@@ -335,6 +383,10 @@ function atualizarTotais() {
   valorMaiorDespesa = maiorDespesaTotal;
 
   saldoTotal = totalReceitas - totalDespesas;
+
+  atualizarResultados();
+  salvarDados();
+  salvarResumo();
 
   // atualizar os resultados com os valores formatados corretamente
   const results = [
