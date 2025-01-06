@@ -624,6 +624,24 @@ body.modo-noturno #modoNoturnoBtn {
     grid-template-columns: repeat(1, 1fr); /* 1 box por linha */
     gap: 1rem;
   }
+
+  input[type="date"] {
+    appearance: textfield; /* Para evitar remoções por estilos globais */
+    -webkit-appearance: none; /* Remove a aparência padrão no iOS */
+    background-color: #f7f7f7;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    height: 40px;
+    padding: 0.625rem;
+    border-radius: 5px;
+    border: 1px solid #cccccc63;
+  }
+  
+  ::-webkit-calendar-picker-indicator {
+    display: inline-block;
+    cursor: pointer;
+    color: #000;
+  }
 }
 
 @media screen and (max-width: 720px) {
