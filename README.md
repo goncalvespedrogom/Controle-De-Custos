@@ -3,7 +3,9 @@
 
 <div align="center">
 
-![financecontrol](https://github.com/user-attachments/assets/704e6048-d9ca-4c32-92ca-d4edc21c1dad)
+![financecontrol](https://github.com/user-attachments/assets/71ba3615-4c22-4701-b6d1-e8f5038561e4)
+
+![financecontrol-mobile](https://github.com/user-attachments/assets/a8612f36-2869-46de-b51b-f31e6d65a9d5)
 
 </div>
 
