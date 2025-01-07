@@ -134,10 +134,10 @@ pessoaForm.addEventListener("submit", (e) => {
     });
 
     pessoaEditando = null; // limpa a pessoa editando
-    document.querySelector("#pessoaForm button[type='submit']").innerHTML = '<i class="bi bi-person-plus-fill"></i>'; // Altera o texto do botão
+    document.querySelector("#pessoaForm button[type='submit']").innerHTML = '<i class="bi bi-person-plus-fill"></i>'; // altera o texto do botão
     
   } else {
-    // caso não seja uma edição, criamos um novo usuário
+    // caso não seja uma edição, cria um novo usuário
     const novaPessoa = { id: pessoaIdSeq++, nome, idade };
     pessoas.push(novaPessoa);
   }
@@ -227,7 +227,7 @@ transacaoForm.addEventListener("submit", (e) => {
   const data = dataInput
     ? dataInput.split("-").reverse().join("/") : new Date().toLocaleDateString("pt-BR");
 
-  // se estamos editando uma transação
+  // se está editando uma transação
   if (transacaoEditando) {
     // atualiza os dados da transação editada
     transacaoEditando.descricao = descricao;
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // garante que o placeholder volte após registrar a transação
   const transacaoForm = document.getElementById('transacaoForm');
   transacaoForm.addEventListener('submit', function () {
-    // após o submit, se o campo de data estiver vazio, restauramos o placeholder
+    // após o submit, se o campo de data estiver vazio, restaura o placeholder
     if (!dateInput.value) {
       dateInput.setAttribute('data-placeholder', 'Selecione uma data');
     }

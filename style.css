@@ -628,9 +628,9 @@ body.modo-noturno #modoNoturnoBtn {
 
   /* input de data */
   input[type="date"] {
-    appearance: none; /* Remove estilos padrão do navegador */
+    appearance: none; /* remove estilos padrão do navegador */
     -webkit-appearance: none;
-    -moz-appearance: none; /* Suporte para Firefox */
+    -moz-appearance: none; /* suporte para firefox */
     background-image: url("img/caret-down-fill.svg");
     background-size: 24px;
     background-repeat: no-repeat;
@@ -649,18 +649,18 @@ body.modo-noturno #modoNoturnoBtn {
     position: relative;
   }
 
-  /* Placeholder personalizado (usado com JavaScript) */
+  /* placeholder personalizado (usado com JavaScript) */
   input[data-placeholder]:empty::before {
-    content: attr(data-placeholder); /* Exibe o placeholder */
+    content: attr(data-placeholder); /* exibe o placeholder */
     color: #999;
     font-size: 1rem;
     position: absolute;
     line-height: 40px;
     left: 0.625rem;
-    pointer-events: none; /* Não interfere no clique */
+    pointer-events: none; /* não interfere no clique */
   }
 
-  /* Remove o texto ao focar no campo */
+  /* remove o texto ao focar no campo */
   input[type="date"]:focus::before {
     content: "";
   }
